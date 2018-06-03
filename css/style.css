@@ -1,0 +1,403 @@
+@charset "utf-8";
+body {
+	background: #42413C;
+	margin: 0;
+	padding: 0;
+	color: #333;
+	background-color: #8dd4f5;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	line-height: 1.4;
+}
+
+.alert {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+.w3-select{
+	width:100%;
+	border:none;
+	border-bottom:1px solid #ccc
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.alert-success hr {
+  border-top-color: #b1dfbb;
+}
+
+.alert-success .alert-link {
+  color: #0b2e13;
+}
+
+.alert-flash {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.alert-danger hr {
+  border-top-color: #f1b0b7;
+}
+
+.alert-danger .alert-link {
+  color: #491217;
+}
+
+/* ~~ Element/tag selectors ~~ */
+ul, ol, dl { /* Due to variations between browsers, it's best practices to zero padding and margin on lists. For consistency, you can either specify the amounts you want here, or on the list items (LI, DT, DD) they contain. Remember that what you do here will cascade to the .nav list unless you write a more specific selector. */
+	padding: 0;
+	margin: 0;
+}
+h1, h2, h3, h4, h5, h6, p {
+	margin-top: 0;	 /* removing the top margin gets around an issue where margins can escape from their containing div. The remaining bottom margin will hold it away from any elements that follow. */
+	padding-right: 15px;
+	padding-left: 15px; /* adding the padding to the sides of the elements within the divs, instead of the divs themselves, gets rid of any box model math. A nested div with side padding can also be used as an alternate method. */
+}
+/* ~~ Styling for your site's links must remain in this order - including the group of selectors that create the hover effect. ~~ */
+a:link {
+	color: #42413C;
+	text-decoration: underline; /* unless you style your links to look extremely unique, it's best to provide underlines for quick visual identification */
+}
+a:visited {
+	color: #6E6C64;
+	text-decoration: underline;
+}
+a:hover, a:active, a:focus { /* this group of selectors will give a keyboard navigator the same hover experience as the person using a mouse. */
+	text-decoration: none;
+}
+
+/* ~~ this fixed width container surrounds the other divs ~~ */
+.container {
+	width: 90%;
+	background: #FFF; /* the auto value on the sides, coupled with the width, centers the layout */
+	height: 100%;
+	margin-top: 0;
+	margin-right: 5%;
+	margin-bottom: 0;
+	margin-left: 5%;
+	float: left;
+}
+
+/* ~~ the header is not given a width. It will extend the full width of your layout. It contains an image placeholder that should be replaced with your own linked logo ~~ */
+.header {
+	background: #ADB96E;
+	float: none;
+	height: 50px;
+}
+
+/* ~~ This is the layout information. ~~ 
+
+1) Padding is only placed on the top and/or bottom of the div. The elements within this div have padding on their sides. This saves you from any "box model math". Keep in mind, if you add any side padding or border to the div itself, it will be added to the width you define to create the *total* width. You may also choose to remove the padding on the element in the div and place a second div within it with no width and the padding necessary for your design.
+
+*/
+
+.content {
+	float: left;
+	padding-top: 10px;
+	padding-right: 0;
+	padding-bottom: 10px;
+	padding-left: 0;
+	height: 100%;
+	width: 100%;
+}
+
+/* ~~ The footer ~~ */
+.footer {
+	background: #CCC49F;
+	float: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	height: 100%;
+	width: 90%;
+	margin-right: 5%;
+	margin-left: 5%;
+}
+
+/* ~~ miscellaneous float/clear classes ~~ */
+.fltrt {  /* this class can be used to float an element right in your page. The floated element must precede the element it should be next to on the page. */
+	float: right;
+	margin-left: 8px;
+}
+.fltlft { /* this class can be used to float an element left in your page. The floated element must precede the element it should be next to on the page. */
+	float: left;
+	margin-right: 8px;
+}
+.clearfloat { /* this class can be placed on a <br /> or empty div as the final element following the last floated div (within the #container) if the #footer is removed or taken out of the #container */
+	clear:both;
+	height:0;
+	font-size: 1px;
+	line-height: 0px;
+}
+.leftlinks {
+	float: left;
+	height: 1200px;
+	width: 25%;
+	padding-left: 5%;
+	color: #FFF;
+	background-color: #9C9;
+	padding-top: 10px;
+}
+.editingwindow {
+	float: left;
+	height: 100%;
+	width: 64%;
+	padding-left: 3%;
+	background-color: #FFF;
+	padding-top: 10px;
+}
+img {
+    max-width: 100%;
+    height: auto;
+    width: auto\9; /* ie8 */
+}
+.all {
+	float: left;
+	height: 100%;
+	width: 100%;
+}
+.hit-the-floor {
+color: #fff;
+font-size: 4em;
+font-weight: bold;
+font-family: Helvetica;
+text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
+}
+
+.hit-the-floor {
+  text-align: center;
+}
+.subtitle{
+	font-family:Tahoma, Geneva, sans-serif;
+	color:#000;
+	font-size:16px;
+	font-weight: bolder;
+	text-decoration: underline;
+}
+.normal{
+	font-family:Tahoma, Geneva, sans-serif;
+	color:#000;
+	font-size:14px;
+	font-weight: lighter;
+}
+.tiny{
+	font-family:Tahoma, Geneva, sans-serif;
+	color:#333;
+	font-size:12px;
+	font-weight: lighter;
+}
+.price{
+	font-family:Tahoma, Geneva, sans-serif;
+	color:#666;
+	font-size:24px;
+	font-weight: lighter;
+}
+.undersub{
+	font-family:Tahoma, Geneva, sans-serif;
+	color:#FFF;
+	font-size:14px;
+	font-weight: bolder;
+}.loginbox {
+	float: left;
+	height: 100%;
+	width: 50%;
+	background-color: #333;
+	margin-right: 25%;
+	margin-left: 25%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.entrybox {
+	background-color: #FFF;
+	float: left;
+	height: 100%;
+	width: 50%;
+	margin-right: 25%;
+	margin-left: 25%;
+	padding-top: 30px;
+	padding-bottom: 10px;
+	font-family: Tahoma, Geneva, sans-serif;
+}
+.whiteinnerSection {
+	float: left;
+	height: 100%;
+	width: 90%;
+	background-color: #FFF;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	margin-right: 5%;
+	margin-left: 5%;
+	margin-top: 0px;
+	padding-top: 10px;
+}
+.whiteinner {
+	float: left;
+	height: 100%;
+	width: 70%;
+	background-color: #FFF;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 36px;
+	font-weight: bold;
+	margin-right: 15%;
+	margin-left: 15%;
+	margin-top: 0px;
+	padding-top: 10px;
+}
+.third {
+	float: left;
+	height: 100%;
+	width: 32%;
+	margin-top: 20px;
+	font-weight: normal;
+	border: thin dotted #CCC;
+	margin-bottom: 10px;
+	padding-bottom: 5px;
+	font-size: 14px;
+	margin-right: 5px;
+}
+.gridthird {
+	float: left;
+	height: 100%;
+	width: 30%;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	padding-left: 5%;
+}
+.gridimagepreview {
+	float: left;
+	height: 100%;
+	width: 27%;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+}
+.Centered {
+	float: left;
+	height: 100%;
+	width: 97%;
+	padding-left: 2%;
+	font-size: 12px;
+}
+.sectionHead {
+	float: left;
+	height: 100%;
+	width: 90%;
+	margin-right: 5%;
+	margin-left: 5%;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	color: #FFF;
+	background-color: #333;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-top: 20px;
+}
+.panelHead {
+	float: left;
+	height: 100%;
+	width: 70%;
+	margin-right: 15%;
+	margin-left: 15%;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	color: #FFF;
+	background-color: #333;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-top: 20px;
+}
+
+.halfpanel {
+	float: left;
+	height: 100%;
+	width: 48%;
+	margin-right: 5px;
+	margin-left: 5px;
+	border: thin dashed #CCC;
+	margin-bottom: 10px;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	padding-bottom: 5px;
+	margin-top: 20px;
+}
+.trueHalf {
+	float: left;
+	height: 100%;
+	width: 49%;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+}
+.truequart {
+	float: left;
+	height: 100%;
+	width: 40%;
+	font-size: 14px;
+}
+.trueFull {
+	float: left;
+	height: 100%;
+	width: 75%;
+	padding-top: 5px;
+	margin-right: 25%;
+}
+.helpSmall {
+	float: left;
+	height: 100%;
+	width: 25%;
+	padding-top: 5px;
+	padding-left: 15%;
+}
+.helpBig {
+	float: left;
+	height: 100%;
+	width: 50%;
+	padding-top: 5px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 2%;
+}
+.quarter {
+	float: left;
+	height: 100%;
+	width: 25%;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+}
+.Horizonal {
+	height: 100%;
+	width: auto;
+	margin-top: 10px;
+	margin-right: 10%;
+	margin-bottom: 10px;
+	margin-left: 10%;
+}
+.Gridhalf {
+	float: left;
+	height: 100%;
+	width: 45%;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	padding-left: 5%;
+}
