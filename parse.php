@@ -1,5 +1,5 @@
 	<?php	
-		$filename="http://root-hosting.ddns.net:25461/get.php?username=jmilne&password=7kEmF5jITC&type=m3u_plus&output=ts";
+		$filename="";
 		$file_headers = @get_headers($filename);
 		$re = '/group-title="(?s).*",/';
 		$quotes = '/(["\'])(?:(?=(\\\\?))\2.)*?\1/';
