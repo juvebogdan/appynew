@@ -112,7 +112,8 @@ class Testing extends MY_Controller {
 		}
 		$data['livelist'] = file($live, FILE_IGNORE_NEW_LINES);
 		//print_r($data['livelist']);
-		//$this->load->view('sortable', $data);
+		//var_dump($data['livelist'][1]);
+		$this->load->view('sortable', $data);
 	}
 
 	public function sortlist() {
@@ -130,10 +131,10 @@ class Testing extends MY_Controller {
 			for ($i=0; $i < count($newlist); $i++) {
 				write_file($live, $newlist[$i] . "\r\n", "a+");
 			}
-			echo 'ok';
+			echo 'success';
 		}
 		else {
-			echo 'nista';
+			echo 'error';
 		}
 	}
 

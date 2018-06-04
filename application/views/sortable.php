@@ -51,7 +51,11 @@
         <div class='overflow-content' style='width:60%;margin: 0 auto;display:block'>
           <ul id="sortable">
             <?php for($i=0; $i<count($livelist); $i++):?>
-              <li class="ui-state-default" id='<?php echo 'item-' . $livelist[$i]?>'><img alt="" class='img2' style="width:25px;height:25px;border:1px solid red;" src='<?php echo explode(';', $livelist[$i])[0]?>' /> <?php echo explode(';', $livelist[$i])[1]?></li>
+              <?php $src = trim(explode(';', $livelist[$i])[0]); ?>
+              <?php 
+                echo  "<li class='ui-state-default' id='item-" . trim($livelist[$i]) . "'><img alt='' class='img2' style='width:25px;height:25px;border:1px solid red;' src='" . $src . "' /> " . trim(explode(';', $livelist[$i])[1]) . 
+              "</li>";
+              ?>
             <?php endfor?>
           </ul>    
         </div>
