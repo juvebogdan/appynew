@@ -104,14 +104,24 @@ class Testing extends MY_Controller {
 	}
 
 	public function sorting() {
-		$live= "/var/www/appy.zone/public_html/".$_SESSION['username']."/iptv/lists/live/list.txt";
+		if ($_SESSION['username'] == 'FissNew') {
+			$live= "/var/www/appy.zone/public_html/iptv/lists/Live/list.txt";
+		}
+		else {
+			$live= "/var/www/appy.zone/public_html/".$_SESSION['username']."/iptv/lists/live/list.txt";
+		}
 		$data['livelist'] = file($live, FILE_IGNORE_NEW_LINES);
 		//print_r($data['livelist']);
 		//$this->load->view('sortable', $data);
 	}
 
 	public function sortlist() {
-		$live= "/var/www/appy.zone/public_html/".$_SESSION['username']."/iptv/lists/live/list.txt";
+		if ($_SESSION['username'] == 'FissNew') {
+			$live= "/var/www/appy.zone/public_html/iptv/lists/Live/list.txt";
+		}
+		else {
+			$live= "/var/www/appy.zone/public_html/".$_SESSION['username']."/iptv/lists/live/list.txt";
+		}
 		$currentlist = file($live, FILE_IGNORE_NEW_LINES);
 		$newlist = $this->input->post('item');
 		$diff = is_array($newlist) ? array_diff($currentlist, $newlist) : array('t');
