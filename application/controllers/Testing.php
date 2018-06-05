@@ -138,4 +138,63 @@ class Testing extends MY_Controller {
 		}
 	}
 
+	public function parse()
+	{
+		//$filename="http://root-hosting.ddns.net:254461/get.php?username=appyv5&password=2201&type=m3u_plus&output=ts";
+		$filename="";
+		$pozicija = strrpos('', '/');
+		$link = substr('', $pozicija + 1);
+		exit($link);
+		$file_headers = @get_headers($filename);
+		if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') 
+		{
+    		$num['group_titles']=array();
+    		$num['live_group_titles']=array();	
+			//$this->cache->save($this->username, $num, $this->ttl);
+			return $num;
+		}
+		//
+		$lines = file($filename);
+		//$lines=file("");
+		array_splice($lines, 0, 1);
+		//exit(print_r(expression));
+		$i=0;
+		foreach($lines as $broj=>$pod)
+		{
+			if($broj%2==0)
+			{
+				$i++;
+				$niz[$i]['naslov']=$pod;
+			}
+			else
+			{
+				$niz[$i]['link']=$pod;	
+			}
+		}
+		$live=0;
+		$movie=0;
+		$tv_show=0;
+
+		shell_exec('rm -rf ' . $this->basepath . $this->username . '/iptv/lists/movies/list.txt');
+		foreach($niz as $broj=>$pod)
+		{
+			// $group_titles[substr($pod['naslov'],strpos($pod['naslov'],'group-title="')+strlen('group-title="'),strpos($pod['naslov'],'"',strpos($pod['naslov'],'group-title="')+strlen('group-title="'))-(strpos($pod['naslov'],'group-title="')+strlen('group-title="')))][]=substr($pod['naslov'],strrpos($pod['naslov'],'"')+2,strlen($pod['naslov'])-strrpos($pod['naslov'],'"')+2);
+
+			if(isset(explode('/', $pod['link'])[6]) && (explode('/', $pod['link'])[3])=='live')
+			{
+				$live+=1;
+				$live_group_titles[substr($pod['naslov'],strpos($pod['naslov'],'group-title="')+strlen('group-title="'),strpos($pod['naslov'],'"',strpos($pod['naslov'],'group-title="')+strlen('group-title="'))-(strpos($pod['naslov'],'group-title="')+strlen('group-title="')))][]=array('name' => trim(substr($pod['naslov'],strrpos($pod['naslov'],'"')+2,strlen($pod['naslov'])-strrpos($pod['naslov'],'"')+2)), 'link' => trim((explode('/', $pod['link'])[6])));
+			}
+		}
+
+		$num['live_group_titles'] = isset($live_group_titles) ? $live_group_titles : array();
+		//$this->cache->save($this->username, $num, $this->ttl);
+		// if (file_exists($this->basepath . $this->username . '/iptv/lists/movies/list.txt')) {
+		// 	$this->load->model('imdbmodel');
+		// 	$this->imdbmodel->insertJob($this->username);
+		// }
+		print_r($num);
+	}
+	
+
 }

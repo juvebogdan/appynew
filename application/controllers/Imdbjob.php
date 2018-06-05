@@ -676,11 +676,12 @@ class Imdbjob extends CI_Controller {
 		foreach($niz as $broj=>$pod)
 		{
 			// $group_titles[substr($pod['naslov'],strpos($pod['naslov'],'group-title="')+strlen('group-title="'),strpos($pod['naslov'],'"',strpos($pod['naslov'],'group-title="')+strlen('group-title="'))-(strpos($pod['naslov'],'group-title="')+strlen('group-title="')))][]=substr($pod['naslov'],strrpos($pod['naslov'],'"')+2,strlen($pod['naslov'])-strrpos($pod['naslov'],'"')+2);
-			if(isset(explode('/', $pod['link'])[6]) && isset(explode('/', $pod['link'])[3]) && (explode('/', $pod['link'])[3])=='live')
+			if(strrpos($pod['link'], '/live/') != FALSE)
 			{
 				$live+=1;
-				//echo 'live';
-				$live_group_titles[substr($pod['naslov'],strpos($pod['naslov'],'group-title="')+strlen('group-title="'),strpos($pod['naslov'],'"',strpos($pod['naslov'],'group-title="')+strlen('group-title="'))-(strpos($pod['naslov'],'group-title="')+strlen('group-title="')))][]=array('name' => trim(substr($pod['naslov'],strrpos($pod['naslov'],'"')+2,strlen($pod['naslov'])-strrpos($pod['naslov'],'"')+2)), 'link' => trim((explode('/', $pod['link'])[6])));
+				$pozicija = strrpos($pod['link'], '/') + 1;
+				$link = substr($pod['link'], $pozicija);
+				$live_group_titles[substr($pod['naslov'],strpos($pod['naslov'],'group-title="')+strlen('group-title="'),strpos($pod['naslov'],'"',strpos($pod['naslov'],'group-title="')+strlen('group-title="'))-(strpos($pod['naslov'],'group-title="')+strlen('group-title="')))][]=array('name' => trim(substr($pod['naslov'],strrpos($pod['naslov'],'"')+2,strlen($pod['naslov'])-strrpos($pod['naslov'],'"')+2)), 'link' => $link);
 			}
 			else if(isset(explode('/', $pod['link'])[3]) && (explode('/', $pod['link'])[3])=='movie')
 			{
