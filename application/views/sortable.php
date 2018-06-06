@@ -57,6 +57,14 @@
               "</li>";
               ?>
             <?php endfor?>
+<!--             <?php for($i=1; $i<=count($livelist); $i++):?>
+              <?php preg_match_all('/(["\'])(?:(?=(\\\\?))\2.)*?\1/', $livelist[$i]['naslov'], $matches, PREG_OFFSET_CAPTURE);
+               ?>
+              <?php 
+                echo  "<li class='ui-state-default' id='item-" . str_replace('"', '', $matches[0][0][0]) . "///" . str_replace('"', '', $matches[0][1][0]) . "///" . str_replace('"', '', $matches[0][2][0]) . "'><img alt='' class='img2' style='width:25px;height:25px;border:1px solid red;' src='" . str_replace('"', '', $matches[0][1][0]) . "' /> " . str_replace('"', '', $matches[0][0][0]) . 
+              "</li>";
+              ?>
+            <?php endfor?> -->            
           </ul>    
         </div>
       </fieldset>
@@ -102,7 +110,7 @@ $('#submit').click(function(){
   $.ajax({
       data: listdata,
       type: 'POST',
-      url: '<?php echo base_url(); ?>testing/sortlist',
+      url: '<?php echo base_url(); ?>testing/sortlist247',
       success: function(data)   
       {
         alert(data);               

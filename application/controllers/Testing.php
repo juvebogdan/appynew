@@ -108,9 +108,32 @@ class Testing extends MY_Controller {
 			$live= "/var/www/appy.zone/public_html/iptv/lists/Live/list.txt";
 		}
 		else {
-			$live= "/var/www/appy.zone/public_html/".$_SESSION['username']."/iptv/lists/live/list.txt";
+			$live= "/var/www/appy.zone/public_html/".$_SESSION['username']."/iptv/lists/247/list.txt";
 		}
 		$data['livelist'] = file($live, FILE_IGNORE_NEW_LINES);
+
+		//247 part
+		$niz = array();
+		$i = 0;
+		foreach($data['livelist'] as $broj=>$pod)
+		{
+			if($broj%2==0)
+			{
+				$i++;
+				if($pod!='') {
+					$niz[$i]['naslov']=$pod;
+				}
+			}
+			else
+			{
+				if($pod!='') {
+					$niz[$i]['link']=$pod;
+				}
+			}
+		}
+		$data['livelist'] = $niz;
+		////////////////
+
 		//print_r($data['livelist']);
 		//var_dump($data['livelist'][1]);
 		$this->load->view('sortable', $data);
@@ -137,6 +160,37 @@ class Testing extends MY_Controller {
 			echo 'error';
 		}
 	}
+
+	public function sortlist247() {
+		if ($_SESSION['username'] == 'FissNew') {
+			$live= "/var/www/appy.zone/public_html/iptv/lists/247/list.txt";
+		}
+		else {
+			$live= "/var/www/appy.zone/public_html/".$_SESSION['username']."/iptv/lists/247/list.txt";
+		}	
+		$currentlist = file($live, FILE_IGNORE_NEW_LINES);
+
+		$niz = array();
+		$i = 0;
+		foreach($currentlist as $broj=>$pod)
+		{
+			if($broj%2==0)
+			{
+				$i++;
+				if($pod!='') {
+					$niz[$i]['naslov']=$pod;
+				}
+			}
+			else
+			{
+				if($pod!='') {
+					$niz[$i]['link']=$pod;
+				}	
+			}
+		}
+		$currentlist = $niz;
+		exit(print_r($currentlist));
+	}	
 
 	public function parse()
 	{

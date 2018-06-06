@@ -184,6 +184,7 @@ function populateGroupTitles() {
                 console.log(data);
               $("#load1").removeClass('fa fa-circle-o-notch fa-spin');       
               flash();
+              location.reload();
             }
           });
         }
@@ -218,6 +219,7 @@ $("#save2").click(function(e) {
                 console.log(data);
               $("#load2").removeClass('fa fa-circle-o-notch fa-spin');       
               flash();
+              location.reload();
             }
           });
         }
@@ -272,4 +274,28 @@ $("#save2").click(function(e) {
         }
       });    
   }); 
-  
+
+  $("#group-remove").click(function(e) {
+      e.preventDefault();
+      var formData = new FormData();
+      formData.append('title',$('#group-titles-remove').val());
+      formData.append('fulltitle',$( "#group-titles-remove option:selected" ).text()); 
+      if ($('#group-titles-remove').val()!='') {
+          $.ajax({         
+            type: 'POST',
+            url: "http://appy.zone/appynew/playlist/groupremove",
+            data: formData,
+            contentType: false,       
+            cache: false,             
+            processData:false,       
+            success: function(data){ 
+              console.log(data);
+              alert(data);
+              location.reload();
+            }
+          });  
+      }
+      else {
+        alert('Pick a channel group to remove');
+      }    
+  });

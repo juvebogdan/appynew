@@ -62,9 +62,15 @@ class Playlist extends MY_Controller {
 				$data['l247'] = file($l247, FILE_IGNORE_NEW_LINES);
 				$sport= "/var/www/appy.zone/public_html/".$this->username."/iptv/sports.txt";
 				$data['sport'] = file($sport, FILE_IGNORE_NEW_LINES);
-				//exit(print_r($data['live_group_titles']));
+
+				$live= "/var/www/appy.zone/public_html/".$this->username."/iptv/lists/live/list.txt";
+
+				$data['livelist'] = file($live, FILE_IGNORE_NEW_LINES);
+
+				//print_r($data['live_group_titles']);
+
 				$this->load->view('playlist', $data);
-				//print_r($this->cache->get_metadata($this->username));
+
 			}			
 		}
 		else if ($this->status==2) {
@@ -401,7 +407,22 @@ class Playlist extends MY_Controller {
 					$linije=file($file, FILE_IGNORE_NEW_LINES);
 					if(!in_array($contents, $linije))
 					{
-						write_file($file,"\n".$contents, "a+");
+						$linije[] = $contents;
+						shell_exec('rm -rf ' . $file);
+						for($i=0; $i<count($linije);$i++) {
+							if($linije[$i]!='') {
+								write_file($file,$linije[$i] . "\r\n", "a+");
+							}
+						}
+					}
+					else {
+						shell_exec('rm -rf ' . $file);
+						//write_file($file,$contents . "\r\n", "a+");
+						for($i=0; $i<count($linije);$i++) {
+							if($linije[$i]!='') {
+								write_file($file,$linije[$i] . "\r\n", "a+");
+							}
+						}						
 					}
 
 				}
@@ -438,9 +459,27 @@ class Playlist extends MY_Controller {
 				else
 				{
 					$linije=file($file, FILE_IGNORE_NEW_LINES);
+					//shell_exec('rm -rf ' . $file);
 					if(!in_array($checkforexist, $linije))
 					{
-						write_file($file,"\n".$contents, "a+");
+						$linije[] = $checkforexist;
+						$linije[] = $this->input->post('link');
+						shell_exec('rm -rf ' . $file);
+						//write_file($file,$contents . "\r\n", "a+");
+						for($i=0; $i<count($linije);$i++) {
+							if($linije[$i]!='') {
+								write_file($file,$linije[$i] . "\r\n", "a+");
+							}
+						}						
+					}
+					else {
+						shell_exec('rm -rf ' . $file);
+						//write_file($file,$contents . "\r\n", "a+");
+						for($i=0; $i<count($linije);$i++) {
+							if($linije[$i]!='') {
+								write_file($file,$linije[$i] . "\r\n", "a+");
+							}
+						}
 					}
 
 				}				
@@ -784,6 +823,48 @@ class Playlist extends MY_Controller {
 
 	private static function alpha($a, $b) {
 	    return strcmp($a[0], $b[0]);
-	}			
+	}
+
+	public function sortlist() {
+		$live= "/var/www/appy.zone/public_html/".$this->username."/iptv/lists/live/list.txt";
+		$currentlist = file($live, FILE_IGNORE_NEW_LINES);
+		$newlist = $this->input->post('item');
+		$diff = is_array($newlist) ? array_diff($currentlist, $newlist) : array('t');
+		if (empty($diff)) {
+			shell_exec("rm -rf " . $live);
+			for ($i=0; $i < count($newlist); $i++) {
+				write_file($live, $newlist[$i] . "\r\n", "a+");
+			}
+			echo 'success';
+		}
+		else {
+			echo 'error';
+		}
+	}
+
+	public function groupremove() {
+		$imagetitle = trim(preg_replace($this->imagenotallowedchars,'',$this->input->post('title')));
+		$line = $this->createListLine($imagetitle,$this->input->post('fulltitle'));
+
+		$live= "/var/www/appy.zone/public_html/".$this->username."/iptv/lists/live/list.txt";
+		$currentlist = file($live, FILE_IGNORE_NEW_LINES);	
+		$ind = 0;
+		shell_exec("rm -rf " . $live);
+		for ($i=0; $i < count($currentlist); $i++) {
+			if(trim($currentlist[$i]) == trim($line)) {
+				$ind = 1;
+			}
+			else {
+				write_file($live, $currentlist[$i] . "\r\n", "a+");
+			}
+		}
+
+		if ($ind==1) {
+			exit('Group title removed');
+		}
+		else {
+			exit('Selected group title is not in the current list');
+		}
+	}				
 
 }
