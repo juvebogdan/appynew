@@ -283,7 +283,7 @@ $("#save2").click(function(e) {
       if ($('#group-titles-remove').val()!='') {
           $.ajax({         
             type: 'POST',
-            url: "http://appy.zone/appynew/playlist/groupremove",
+            url: "http://appy.zone/appynew/playlist/groupremove/live",
             data: formData,
             contentType: false,       
             cache: false,             

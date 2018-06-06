@@ -318,7 +318,7 @@ $('#organise-live-submit').click(function(){
   $.ajax({
       data: listdata,
       type: 'POST',
-      url: '<?php echo base_url(); ?>playlist/sortlist',
+      url: '<?php echo base_url(); ?>playlist/sortlist/live',
       success: function(data)   
       {
         flash();               

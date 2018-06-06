@@ -170,6 +170,11 @@ class Playlist extends MY_Controller {
 			$data['l247'] = file($l247, FILE_IGNORE_NEW_LINES);
 			$sport= "/var/www/appy.zone/public_html/".$this->username."/iptv/sports.txt";
 			$data['sport'] = file($sport, FILE_IGNORE_NEW_LINES);
+
+			$sports= "/var/www/appy.zone/public_html/".$this->username."/iptv/lists/sports/list.txt";
+
+			$data['livelist'] = file($sports, FILE_IGNORE_NEW_LINES);
+
 			//
 			$this->load->view('iptvsports',$data);
 		}
@@ -825,8 +830,9 @@ class Playlist extends MY_Controller {
 	    return strcmp($a[0], $b[0]);
 	}
 
-	public function sortlist() {
-		$live= "/var/www/appy.zone/public_html/".$this->username."/iptv/lists/live/list.txt";
+	public function sortlist($type) {
+		$live= "/var/www/appy.zone/public_html/".$this->username."/iptv/lists/" . $type . "/list.txt";
+
 		$currentlist = file($live, FILE_IGNORE_NEW_LINES);
 		$newlist = $this->input->post('item');
 		$diff = is_array($newlist) ? array_diff($currentlist, $newlist) : array('t');
@@ -842,11 +848,18 @@ class Playlist extends MY_Controller {
 		}
 	}
 
-	public function groupremove() {
+	public function groupremove($type) {
 		$imagetitle = trim(preg_replace($this->imagenotallowedchars,'',$this->input->post('title')));
-		$line = $this->createListLine($imagetitle,$this->input->post('fulltitle'));
 
-		$live= "/var/www/appy.zone/public_html/".$this->username."/iptv/lists/live/list.txt";
+		if ($type=='live') {
+			$line = $this->createListLine($imagetitle,$this->input->post('fulltitle'));
+		}
+		else if ($type=='sports'){
+			$line = 'http://appy.zone/'.$_SESSION['username'].'/iptv/images/sports/'.$imagetitle.'.png;'.$this->input->post('fulltitle');
+		}
+
+		$live= "/var/www/appy.zone/public_html/".$this->username."/iptv/lists/" . $type . "/list.txt";
+
 		$currentlist = file($live, FILE_IGNORE_NEW_LINES);	
 		$ind = 0;
 		shell_exec("rm -rf " . $live);

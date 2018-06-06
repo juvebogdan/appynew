@@ -50,21 +50,21 @@
       <fieldset>
         <div class='overflow-content' style='width:60%;margin: 0 auto;display:block'>
           <ul id="sortable">
-            <?php for($i=0; $i<count($livelist); $i++):?>
+<!--             <?php for($i=0; $i<count($livelist); $i++):?>
               <?php $src = trim(explode(';', $livelist[$i])[0]); ?>
               <?php 
                 echo  "<li class='ui-state-default' id='item-" . trim($livelist[$i]) . "'><img alt='' class='img2' style='width:25px;height:25px;border:1px solid red;' src='" . $src . "' /> " . trim(explode(';', $livelist[$i])[1]) . 
               "</li>";
               ?>
-            <?php endfor?>
-<!--             <?php for($i=1; $i<=count($livelist); $i++):?>
+            <?php endfor?> -->
+            <?php for($i=1; $i<=count($livelist); $i++):?>
               <?php preg_match_all('/(["\'])(?:(?=(\\\\?))\2.)*?\1/', $livelist[$i]['naslov'], $matches, PREG_OFFSET_CAPTURE);
                ?>
               <?php 
                 echo  "<li class='ui-state-default' id='item-" . str_replace('"', '', $matches[0][0][0]) . "///" . str_replace('"', '', $matches[0][1][0]) . "///" . str_replace('"', '', $matches[0][2][0]) . "'><img alt='' class='img2' style='width:25px;height:25px;border:1px solid red;' src='" . str_replace('"', '', $matches[0][1][0]) . "' /> " . str_replace('"', '', $matches[0][0][0]) . 
               "</li>";
               ?>
-            <?php endfor?> -->            
+            <?php endfor?>           
           </ul>    
         </div>
       </fieldset>
