@@ -168,28 +168,27 @@ class Testing extends MY_Controller {
 		else {
 			$live= "/var/www/appy.zone/public_html/".$_SESSION['username']."/iptv/lists/247/list.txt";
 		}	
-		$currentlist = file($live, FILE_IGNORE_NEW_LINES);
 
-		$niz = array();
-		$i = 0;
-		foreach($currentlist as $broj=>$pod)
-		{
-			if($broj%2==0)
-			{
-				$i++;
-				if($pod!='') {
-					$niz[$i]['naslov']=$pod;
-				}
-			}
-			else
-			{
-				if($pod!='') {
-					$niz[$i]['link']=$pod;
-				}	
+		$currentlist = file($live, FILE_IGNORE_NEW_LINES);
+		$newlist = $this->input->post('item');
+
+		$finallist = array();
+
+		if (is_array($newlist)) {
+			for ($i=0; $i < count($newlist); $i++) {
+				$data = explode('///', $newlist[$i]);
+				$line = 'name="' . $data[0] . '" tvg-logo="' . $data[1] . '" group-title="' . $data[2] . '"';
+				$finallist[] = $line;
+				$finallist[] = $data[3]; 
 			}
 		}
-		$currentlist = $niz;
-		exit(print_r($currentlist));
+
+		shell_exec("rm -rf " . $live);
+		for ($i=0; $i < count($finallist); $i++) {
+			write_file($live, $finallist[$i] . "\r\n", "a+");
+		}
+		echo 'success';	
+
 	}	
 
 	public function parse()

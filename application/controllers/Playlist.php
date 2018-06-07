@@ -148,7 +148,33 @@ class Playlist extends MY_Controller {
 			$data['l247'] = file($l247, FILE_IGNORE_NEW_LINES);
 			$sport= "/var/www/appy.zone/public_html/".$this->username."/iptv/sports.txt";
 			$data['sport'] = file($sport, FILE_IGNORE_NEW_LINES);
-			//
+
+			$live= "/var/www/appy.zone/public_html/".$this->username."/iptv/lists/247/list.txt";
+
+			$data['livelist'] = file($live, FILE_IGNORE_NEW_LINES);
+
+			//247 part
+			$niz = array();
+			$i = 0;
+			foreach($data['livelist'] as $broj=>$pod)
+			{
+				if($broj%2==0)
+				{
+					$i++;
+					if($pod!='') {
+						$niz[$i]['naslov']=$pod;
+					}
+				}
+				else
+				{
+					if($pod!='') {
+						$niz[$i]['link']=$pod;
+					}
+				}
+			}
+			$data['livelist'] = $niz;
+
+			//print_r($data['livelist']);
 			$this->load->view('iptvloops',$data);			
 		}
 		else if ($this->status==2) {
@@ -848,6 +874,32 @@ class Playlist extends MY_Controller {
 		}
 	}
 
+	public function sortlist247() {
+
+		$live= "/var/www/appy.zone/public_html/".$this->username."/iptv/lists/247/list.txt";
+
+		$currentlist = file($live, FILE_IGNORE_NEW_LINES);
+		$newlist = $this->input->post('item');
+
+		$finallist = array();
+
+		if (is_array($newlist)) {
+			for ($i=0; $i < count($newlist); $i++) {
+				$data = explode('///', $newlist[$i]);
+				$line = 'name="' . $data[0] . '" tvg-logo="' . $data[1] . '" group-title="' . $data[2] . '"';
+				$finallist[] = $line;
+				$finallist[] = $data[3]; 
+			}
+		}
+
+		shell_exec("rm -rf " . $live);
+		for ($i=0; $i < count($finallist); $i++) {
+			write_file($live, $finallist[$i] . "\r\n", "a+");
+		}
+		echo 'success';	
+
+	}	
+
 	public function groupremove($type) {
 		$imagetitle = trim(preg_replace($this->imagenotallowedchars,'',$this->input->post('title')));
 
@@ -878,6 +930,33 @@ class Playlist extends MY_Controller {
 		else {
 			exit('Selected group title is not in the current list');
 		}
+	}
+
+	public function groupremove247() {
+
+		$live= "/var/www/appy.zone/public_html/".$this->username."/iptv/lists/247/list.txt";
+
+		$currentlist = file($live, FILE_IGNORE_NEW_LINES);
+
+		$brojac = 0;
+
+		$niz = array();
+
+		for ($i=0; $i<count($currentlist); $i++) {
+			if ($brojac%2 == 0) {
+				preg_match_all('/(["\'])(?:(?=(\\\\?))\2.)*?\1/', $currentlist[$i], $matches, PREG_OFFSET_CAPTURE);
+				if ($this->input->post('fulltitle') != str_replace('"', '', $matches[0][0][0])) {
+					$niz[] = $currentlist[$i];
+					$niz[] = $currentlist[$i+1];
+				}
+			}
+			$brojac++;
+		}
+		shell_exec("rm -rf " . $live);
+		for ($i=0; $i<count($niz); $i++) {
+			write_file($live, $niz[$i] . "\r\n", "a+");
+		}	
+		exit('Channel removed from list');	
 	}				
 
 }
