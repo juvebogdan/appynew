@@ -1636,6 +1636,13 @@ class Appy extends MY_Controller {
 			for ($i=0; $i < $this->input->post('number'); $i++) {
 				$this->devices->grantiptv($this->input->post('user'. $i),$this->input->post('username'),$this->input->post('password'),$this->input->post('accessduration'));
 			}
+			$appname = $_SESSION['appname'];
+			$clientaddress = $_SESSION['email'];
+			$expirydate = $this->input->post('accessduration');
+			$dataforuser = $this->devices->getuserdata($this->input->post('user0'))['Email'];
+			if (isset($dataforuser) && $dataforuser != '') {
+				$this->sendAccessEmail($dataforuser, $clientaddress, $expirydate, $appname);
+			}			
 			exit('Success');				
 		}		
 	}
@@ -2091,7 +2098,7 @@ class Appy extends MY_Controller {
 		  $email = $_POST['stripeEmail'];
 		  $username = $_POST['username'];
 		  $amount= 99;
-		 \Stripe\Stripe::setApiKey("sk_test_QwPqtekpknfxeIG178lpr3wD"); 
+		 \Stripe\Stripe::setApiKey(""); 
 		   $customer = \Stripe\Customer::create(array(
 		      'email' => $email,
 		      'source'  => $token
@@ -2117,6 +2124,35 @@ class Appy extends MY_Controller {
 		   $error = $e_json['error'];
 		   //echo $error;
 		  }
+	}
+
+	private function sendAccessEmail($useraddress, $clientaddress, $expiredate, $appname) {
+	    $username = $this->config->item('emailapi_username');
+	    $password = $this->config->item('emailapi_password');
+	    //exit('slo');
+	    // Alternative JSON version
+	    // $url = 'http://twitter.com/statuses/update.json';
+	    // Set up and execute the curl process
+	    $curl_handle = curl_init();
+	    curl_setopt($curl_handle, CURLOPT_URL, $this->config->item('emailapi_url'));
+	    curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+	    curl_setopt($curl_handle, CURLOPT_POST, 1);
+	    curl_setopt($curl_handle, CURLOPT_POSTFIELDS, array(
+	    	'useraddress' => $useraddress,
+	    	'clientaddress' => $clientaddress,
+	    	'expiredate' => $expiredate,
+	    	'appname' => $appname
+	    ));
+	     
+	    // Optional, delete this line if your API is open
+	    curl_setopt($curl_handle, CURLOPT_USERPWD, $username . ':' . $password);
+	     
+	    $buffer = curl_exec($curl_handle);
+	    curl_close($curl_handle);
+	     
+	    $result = json_decode($buffer);	
+
+	    //print_r($result);		
 	}
 
 }

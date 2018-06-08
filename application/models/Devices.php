@@ -127,6 +127,14 @@ class Devices extends MY_Model {
   		}
   	}
 
+  public function getuserdata($id) {
+      if ($id!='') {
+        $this->db->where('ID',$id);
+        $query = $this->db->get($this->table);
+        return $query->result_array()[0];
+      }    
+  }
+
 	public function userdetails($id) {
 		$this->db->select('Paid, pinPassed,substring(EndTrial,1,10) as trial,IPAddress as ip,LastOnline,AccessDuration,Email');
 		$this->db->where('ID',$id);
