@@ -63,4 +63,9 @@ class Appymodel extends CI_Model {
       $query=$this->db->query($sql);
       return $query->result_array();
     }
+
+    public function get_all_clients() {
+      $query = $this->db->get($this->table);
+      return $query->result_array();
+    }
 }
