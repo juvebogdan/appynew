@@ -166,7 +166,7 @@
             <?php for($i=0; $i<count($livelist); $i++):?>
               <?php $src = trim(explode(';', $livelist[$i])[0]); ?>
               <?php 
-                echo  "<li class='ui-state-default' id='item-" . trim($livelist[$i]) . "'><img alt='' class='img2' style='width:25px;height:25px;border:1px solid red;' src='" . $src . "' /> " . trim(explode(';', $livelist[$i])[1]) . 
+                echo  "<li class='ui-state-default' id='item-" . $i . "'><img alt='' class='img2' style='width:25px;height:25px;border:1px solid red;' src='" . $src . "' /> " . trim(explode(';', $livelist[$i])[1]) . 
               "</li>";
               ?>
             <?php endfor?>           
@@ -415,7 +415,8 @@ $('#organise-live-submit').click(function(){
       url: '<?php echo base_url(); ?>playlist/sortlist/sports',
       success: function(data)   
       {
-        flash();               
+        flash(); 
+        console.log(data);              
       }      
   });  
 });

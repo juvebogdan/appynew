@@ -1752,6 +1752,7 @@ class Appy extends MY_Controller {
 		{
 			$sal=999;
 		}
+		else $sal=10;
 	//--
 		$rand = substr(md5(microtime()),rand(0,26),8);
 		$stripe=sprintf('<form action="https://www.ammakeup.co.uk/Plans/appedits.php" method="POST">

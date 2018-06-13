@@ -194,6 +194,16 @@ $cifra=0;
           </div>
         </form>
       </div>
+      <div class="quarter">
+      <p align="center">User email</p>
+      <form id="form17" name="form10" method="post" action="">
+        <label>
+          <div align="center">
+            <input type="text" name="emailuser" id="emailuser" />
+          </div>
+        </label>
+      </form>
+    </div>
 <div class="price">
   <p>&nbsp;</p>
   <p>&nbsp;</p>
@@ -238,7 +248,7 @@ $cifra=0;
     foreach($all as $a=>$b)
     {
       $b['status']=='1'?$b['status']='active':'inactive';
-      printf("['%s','%s','%s','%s','%s','%s','%s','%s'],",$i,$b['username'],$b['password'],$b['type'],$b['Appname'],$b['expiry_date'],$b['amount'],$b['status']);
+      printf("['%s','%s','%s','%s','%s','%s','%s','%s','%s'],",$i,$b['username'],$b['password'],$b['type'],$b['Appname'],$b['expiry_date'],$b['amount'],$b['status'],$b['email']);
       $i++;
     }
   ?>[]];
@@ -249,6 +259,7 @@ $cifra=0;
     $("#textfield3").val(array[this.value][4]);
     $("#textfield5").val(array[this.value][5]);
     $("#textfield7").val(array[this.value][7]);
+    $("#emailuser").val(array[this.value][8])
     $('#u1').val(array[this.value][1]);
     $('#p1').val(array[this.value][2]);
       $.ajax({

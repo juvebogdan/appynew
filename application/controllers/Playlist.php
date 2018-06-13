@@ -861,17 +861,14 @@ class Playlist extends MY_Controller {
 
 		$currentlist = file($live, FILE_IGNORE_NEW_LINES);
 		$newlist = $this->input->post('item');
-		$diff = is_array($newlist) ? array_diff($currentlist, $newlist) : array('t');
-		if (empty($diff)) {
-			shell_exec("rm -rf " . $live);
-			for ($i=0; $i < count($newlist); $i++) {
-				write_file($live, $newlist[$i] . "\r\n", "a+");
-			}
-			echo 'success';
+		//$diff = is_array($newlist) ? array_diff($currentlist, $newlist) : array('t');
+
+		//exit(print_r($newlist));
+		shell_exec("rm -rf " . $live);
+		for ($i=0; $i < count($newlist); $i++) {
+			write_file($live, $currentlist[$newlist[$i]] . "\r\n", "a+");
 		}
-		else {
-			echo 'error';
-		}
+		echo 'success';
 	}
 
 	public function sortlist247() {
