@@ -65,7 +65,12 @@ class Playlist extends MY_Controller {
 
 				$live= "/var/www/appy.zone/public_html/".$this->username."/iptv/lists/live/list.txt";
 
-				$data['livelist'] = file($live, FILE_IGNORE_NEW_LINES);
+				if (file_exists($live)) {
+					$data['livelist'] = file($live, FILE_IGNORE_NEW_LINES);
+				}
+				else {
+					$data['livelist'] = array();
+				}
 
 				//print_r($data['live_group_titles']);
 
@@ -151,7 +156,12 @@ class Playlist extends MY_Controller {
 
 			$live= "/var/www/appy.zone/public_html/".$this->username."/iptv/lists/247/list.txt";
 
-			$data['livelist'] = file($live, FILE_IGNORE_NEW_LINES);
+			if (file_exists($live)) {
+				$data['livelist'] = file($live, FILE_IGNORE_NEW_LINES);
+			}
+			else {
+				$data['livelist'] = array();
+			}
 
 			//247 part
 			$niz = array();
@@ -199,7 +209,12 @@ class Playlist extends MY_Controller {
 
 			$sports= "/var/www/appy.zone/public_html/".$this->username."/iptv/lists/sports/list.txt";
 
-			$data['livelist'] = file($sports, FILE_IGNORE_NEW_LINES);
+			if (file_exists($live)) {
+				$data['livelist'] = file($live, FILE_IGNORE_NEW_LINES);
+			}
+			else {
+				$data['livelist'] = array();
+			}
 
 			//
 			$this->load->view('iptvsports',$data);
@@ -311,7 +326,7 @@ class Playlist extends MY_Controller {
 
 		$num['live_group_titles'] = isset($live_group_titles) ? $live_group_titles : array();
 		$this->cache->save($this->username, $num, $this->ttl);
-		if (file_exists($this->basepath . $this->username . '/iptv/lists/movies/list.txt')) {
+		if (!file_exists($this->basepath . $this->username . '/iptv/lists/movies/list.txt')) {
 			$this->load->model('imdbmodel');
 			$this->imdbmodel->insertJob($this->username);
 		}
