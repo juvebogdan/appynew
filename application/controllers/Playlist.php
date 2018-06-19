@@ -209,8 +209,8 @@ class Playlist extends MY_Controller {
 
 			$sports= "/var/www/appy.zone/public_html/".$this->username."/iptv/lists/sports/list.txt";
 
-			if (file_exists($live)) {
-				$data['livelist'] = file($live, FILE_IGNORE_NEW_LINES);
+			if (file_exists($sports)) {
+				$data['livelist'] = file($sports, FILE_IGNORE_NEW_LINES);
 			}
 			else {
 				$data['livelist'] = array();
@@ -895,18 +895,29 @@ class Playlist extends MY_Controller {
 
 		$finallist = array();
 
-		if (is_array($newlist)) {
-			for ($i=0; $i < count($newlist); $i++) {
-				$data = explode('///', $newlist[$i]);
-				$line = 'name="' . $data[0] . '" tvg-logo="' . $data[1] . '" group-title="' . $data[2] . '"';
-				$finallist[] = $line;
-				$finallist[] = $data[3]; 
+		$niz = array();
+		$i = 0;
+		foreach($currentlist as $broj=>$pod)
+		{
+			if($broj%2==0)
+			{
+				$i++;
+				if($pod!='') {
+					$niz[$i]['naslov']=$pod;
+				}
+			}
+			else
+			{
+				if($pod!='') {
+					$niz[$i]['link']=$pod;
+				}
 			}
 		}
 
 		shell_exec("rm -rf " . $live);
-		for ($i=0; $i < count($finallist); $i++) {
-			write_file($live, $finallist[$i] . "\r\n", "a+");
+		for ($i=0; $i < count($niz); $i++) {
+			write_file($live, $niz[$newlist[$i]]['naslov'] . "\r\n", "a+");
+			write_file($live, $niz[$newlist[$i]]['link'] . "\r\n", "a+");
 		}
 		echo 'success';	
 

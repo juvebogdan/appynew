@@ -130,7 +130,7 @@
               <?php preg_match_all('/(["\'])(?:(?=(\\\\?))\2.)*?\1/', $livelist[$i]['naslov'], $matches, PREG_OFFSET_CAPTURE);
                ?>
               <?php 
-                echo  "<li class='ui-state-default' id='item-" . str_replace('"', '', $matches[0][0][0]) . "///" . str_replace('"', '', $matches[0][1][0]) . "///" . str_replace('"', '', $matches[0][2][0]) . '///' . $livelist[$i]['link'] . "'><img alt='' class='img2' style='width:25px;height:25px;border:1px solid red;' src='" . str_replace('"', '', $matches[0][1][0]) . "' /> " . str_replace('"', '', $matches[0][0][0]) . 
+                echo  "<li class='ui-state-default' id='item-" . $i . "'><img alt='' class='img2' style='width:25px;height:25px;border:1px solid red;' src='" . str_replace('"', '', $matches[0][1][0]) . "' /> " . str_replace('"', '', $matches[0][0][0]) . 
               "</li>";
               ?>
             <?php endfor?>            
@@ -348,6 +348,7 @@ $('#organise-live-submit').click(function(){
       url: '<?php echo base_url(); ?>playlist/sortlist247',
       success: function(data)   
       {
+        console.log(data);
         flash();               
       }      
   });  
