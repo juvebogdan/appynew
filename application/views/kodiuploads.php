@@ -103,6 +103,11 @@
   <input type="file" name="button4" id="imgInp1" value="Browse" />
               <br />
               <span class="tiny">340 x 201 pixels PNG format</span>            </p>
+              <?php if($_SESSION['username']=='stunnertv'): ?>
+                <p align="center">
+                  Updated: <input type="checkbox" id='updated' name="updated" value="updated">
+                </p>
+              <?php endif; ?>
               <div align="center">
                 <input type="submit" name="button3" id="button3" value="Submit" />
               </div>
@@ -365,7 +370,16 @@ $(document).ready(function(){
     formData.append('editsize',$('#editsize').val());
     formData.append('editgenre',$( "#editgenre option:selected" ).text());
     formData.append('editurl',$( "#editurl" ).val());
-    formData.append('completebuild',$( "#selectbuilds" ).val().trim());           
+    formData.append('completebuild',$( "#selectbuilds" ).val().trim()); 
+    if ($('#updated').length)
+    {
+      if ($('#updated').is(":checked")) {
+        formData.append('updated','true');
+      }
+      else {
+        formData.append('updated','false');
+      }
+    }          
     $.ajax({
         url: '<?php echo base_url(); ?>appy/editkodibuild', 
         type: "POST",            
@@ -379,6 +393,7 @@ $(document).ready(function(){
         },                             
         success: function(data)   
         {
+          //console.log(data);
           alert(data);
           $('input[type="submit"]').prop('disabled', false);
           $("#loadingDiv2").hide();  

@@ -484,6 +484,14 @@ class Appy extends MY_Controller {
 		}
 	}
 
+	public function buyiptvnew() {
+		if ($this->username != 'guest') {
+			$this->load->model('appymodel');
+			$data['credits'] = $this->appymodel->get_iptvcredits($this->username);			
+			$this->load->view('buyiptvnew', $data);
+		}
+	}	
+
 	public function buyvpncredits() {
 		$this->load->model('devices');
 		$credits = $this->devices->getVpnUsersCredits($this->username);
@@ -1225,6 +1233,7 @@ class Appy extends MY_Controller {
 		$this->form_validation->set_rules('editgenre','Download Url','trim|alpha_dash_space|required|mandatory');
 		$this->form_validation->set_rules('editsize','Size in MB','trim|alpha_dash_space|required|mandatory');
 		$this->form_validation->set_rules('completebuild','Build','trim|required|mandatory');
+		$this->form_validation->set_rules('updated','state','trim');
 
 		if($this->form_validation->run()==FALSE){
 			exit(validation_errors());
@@ -1239,7 +1248,13 @@ class Appy extends MY_Controller {
 			}
 			else {
 				exit('Build is not editable or does not exist');
-			}			
+			}
+			if ($this->input->post('updated')!='' && $this->input->post('updated')=='true') {
+				if (file_exists($this->basepath . $this->username . "/builds/version.txt")) {
+					$versioncode = file($this->basepath . $this->username . "/builds/version.txt", FILE_IGNORE_NEW_LINES );
+					file_put_contents($this->basepath . $this->username . "/builds/version.txt" , trim($versioncode[0]) + 1);
+				}						
+			}						
 			if (isset($_FILES['files'])) {
 				$this->load->library('upload');
 				$this->load->model('ImageCodeGaming');
@@ -1289,7 +1304,7 @@ class Appy extends MY_Controller {
 					}				
 					for ($i=0; $i<count($result); $i++) {
 						write_file($this->basepath . $this->username . "/V5/kodi/builds.txt", $result[$i] . "\r\n", 'a+');
-					}
+					}					
 					exit('success');
 				}												
 			}	

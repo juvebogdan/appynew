@@ -46,7 +46,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <a href="<?php echo base_url(); ?>playlist/series">TV Series</a><br />         
     <?php endif; ?>
     <p><strong>Purchases</strong><br />
-      <a href="<?php echo base_url(); ?>appy/buyiptv">Buy IPTV Credits</a><br />
+      <?php if($_SESSION['username']=='bogdan' ): ?> 
+      <a href="<?php echo base_url(); ?>appy/buyiptvnew">Buy IPTV Credits</a><br />
+      <?php endif; ?>
       <a href="<?php echo base_url(); ?>appy/buyvpncredits">Buy VPN Credits</a><br />
       <a href="<?php echo base_url(); ?>appy/appedit">Request App Edit</a></p>
     <p><strong>User Managment</strong><br />
