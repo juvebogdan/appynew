@@ -220,7 +220,7 @@ Edit Description
 <script type="text/javascript">
       $('#movies').on('change', function() {
       var ime=$(this).val();
-      $ime=ime.replace(/\:|\¬|\||\,|\/|\\/g, '');
+      ime=ime.replace(/\:|\¬|\||\,|\/|\\/g, '');
       ime=ime.replace(' ', '');
       //console.log(ime);
       <?php

@@ -296,7 +296,7 @@ echo "var channels = ". $js_array . ";\n";
   function imgpreview()
   {
       var ime=$('#channels').val();
-      $ime=ime.replace(/\:|\¬|\||\,|\/|\\/g, '');
+      ime = ime.replace(/\:|\¬|\||\,|\/|\\/g,'');
       ime=ime.replace(' ', '');
       <?php
       if($_SESSION['username']=='FissNew')
