@@ -21,8 +21,8 @@ class Devices extends MY_Model {
   	}
 
   	public function numthismonth() {
-  		$month=date('m');
-  		$this->db->where('substring(RegDate,6,2)',$month);
+  		$month=date('Y-m');
+  		$this->db->where('substring(RegDate,1,7)',$month);
   		$query = $this->db->get($this->table);
   		return $query->num_rows();  		
   	}

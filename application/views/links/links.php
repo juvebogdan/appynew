@@ -51,6 +51,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <?php endif; ?>
       <a href="<?php echo base_url(); ?>appy/buyvpncredits">Buy VPN Credits</a><br />
       <a href="<?php echo base_url(); ?>appy/appedit">Request App Edit</a></p>
+    <?php if ($_SESSION['username']=='FissNew') : ?>
+      <p><strong>IPTV Control</strong><br />
+        <a href="<?php echo base_url(); ?>iptvcontrol/review">Income Review</a><br />
+        <a href="<?php echo base_url(); ?>iptvcontrol/manualedit">Manual Credit Sales</a></p>  
+    <?php endif; ?>
     <p><strong>User Managment</strong><br />
       <a href="<?php echo base_url(); ?>appy/messageuser">Message Users</a><br />
       <a href="<?php echo base_url(); ?>appy/ban">Ban &amp; Allow User</a><br />
