@@ -78,8 +78,12 @@ class Iptvcontrol extends MY_Controller {
 		$data['valuecredits'] = $num['valueCreditsStripe'] + $num['valueCreditsPaypal'];
 		$data['numusers'] = $num['numUsersStripe'] + $num['numUsersPaypal'];
 		$data['valueusers'] = $num['valueUsersStripe'] + $num['valueUsersPaypal'];
-		$data['stripefees'] = ($num['valueUsersStripe'] + $num['valueCreditsStripe']) * 21.4 / 100;
-		$data['paypalfees'] = ($num['valueUsersPaypal'] + $num['valueCreditsPaypal']) * 23.4 / 100;
+		$y = 0.8 * ($num['valueUsersStripe'] + $num['valueCreditsStripe']);
+		$z = $y * 1.4 / 100;
+		$data['stripefees'] = ($num['valueUsersStripe'] + $num['valueCreditsStripe']) - ($y-$z);
+		$y = 0.8 * ($num['valueUsersPaypal'] + $num['valueCreditsPaypal']);
+		$z = $y * 3.4 / 100;		
+		$data['paypalfees'] = ($num['valueUsersPaypal'] + $num['valueCreditsPaypal']) - ($y-$z);
 		$data['partnerfees'] = ($data['valueusers'] + $data['valuecredits'] - $data['stripefees'] - $data['paypalfees']) * 0.6;
 		$data['total'] = ($data['valueusers'] + $data['valuecredits'] - $data['stripefees'] - $data['paypalfees']) * 0.4;
 
