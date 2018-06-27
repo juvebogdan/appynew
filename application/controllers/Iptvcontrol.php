@@ -42,6 +42,8 @@ class Iptvcontrol extends MY_Controller {
   		$num['valueCreditsStripe'] = 0;
   		$num['numCreditsPaypal'] = 0;
   		$num['valueCreditsPaypal'] = 0;
+  		$num['numCreditsManual'] = 0;
+  		$num['valueCreditsManual'] = 0;
 
   		$num['numUsersStripe'] = 0;
   		$num['valueUsersStripe'] = 0;
@@ -61,6 +63,10 @@ class Iptvcontrol extends MY_Controller {
 				$num['numCreditsPaypal'] += $value['amount'];
 				$num['valueCreditsPaypal'] += $value['value'];
 			}
+			else if ($value['type']=='manual') {
+				$num['numCreditsManual'] += $value['amount'];
+				$num['valueCreditsManual'] += $value['value'];
+			}
 		}
 
 		foreach ($users as $value) {
@@ -74,8 +80,8 @@ class Iptvcontrol extends MY_Controller {
 			}
 		}  
 
-		$data['numcredits'] = $num['numCreditsStripe'] + $num['numCreditsPaypal'];
-		$data['valuecredits'] = $num['valueCreditsStripe'] + $num['valueCreditsPaypal'];
+		$data['numcredits'] = $num['numCreditsStripe'] + $num['numCreditsPaypal'] + $num['numCreditsManual'];
+		$data['valuecredits'] = $num['valueCreditsStripe'] + $num['valueCreditsPaypal'] + $num['valueCreditsManual'];
 		$data['numusers'] = $num['numUsersStripe'] + $num['numUsersPaypal'];
 		$data['valueusers'] = $num['valueUsersStripe'] + $num['valueUsersPaypal'];
 		$y = 0.8 * ($num['valueUsersStripe'] + $num['valueCreditsStripe']);
@@ -89,6 +95,26 @@ class Iptvcontrol extends MY_Controller {
 
 		return $data;
 
+  	}
+  	public function manualedit()
+  	{
+  		$this->load->model('stats');
+  		$data['appnames']=$this->stats->appnames();
+  		$this->load->view('manualcredits',$data);
+  	}
+  	public function addcredits()
+  	{
+  		$data['ans']=1;
+  		$appname=$this->input->post('appname');
+  		$credits=$this->input->post('credits');
+  		$value=$this->input->post('value');
+  		//$this->output->set_content_type('application/json')->set_output(json_encode(array('success' => 1, 'data' => $data)));
+  		$this->load->model('stats');
+  		$num=$this->stats->addcredits($appname,$credits,$value);
+  		if($num==1)
+  		  	$this->output->set_content_type('application/json')->set_output(json_encode(array('success' => 1)));
+  	 	else
+  		   	$this->output->set_content_type('application/json')->set_output(json_encode(array('success' => 0)));
   	}
 
 }
