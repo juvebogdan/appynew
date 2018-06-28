@@ -6,7 +6,7 @@ class Stats extends MY_Model {
 	private $localdb;
   private $table = 'stats';
 	private $table2 = 'clients';
-	private $username = 'bogdan';
+	private $username = 'FissNew';
 
 	public function __Construct()
 	{
