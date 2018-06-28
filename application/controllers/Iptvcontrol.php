@@ -86,12 +86,12 @@ class Iptvcontrol extends MY_Controller {
 		$data['valueusers'] = $num['valueUsersStripe'] + $num['valueUsersPaypal'];
 		$y = 0.8 * ($num['valueUsersStripe'] + $num['valueCreditsStripe']);
 		$z = $y * 1.4 / 100;
-		$data['stripefees'] = ($num['valueUsersStripe'] + $num['valueCreditsStripe']) - ($y-$z);
+		$data['stripefees'] = round(($num['valueUsersStripe'] + $num['valueCreditsStripe']) - ($y-$z),2);
 		$y = 0.8 * ($num['valueUsersPaypal'] + $num['valueCreditsPaypal']);
 		$z = $y * 3.4 / 100;		
-		$data['paypalfees'] = ($num['valueUsersPaypal'] + $num['valueCreditsPaypal']) - ($y-$z);
-		$data['partnerfees'] = ($data['valueusers'] + $data['valuecredits'] - $data['stripefees'] - $data['paypalfees']) * 0.6;
-		$data['total'] = ($data['valueusers'] + $data['valuecredits'] - $data['stripefees'] - $data['paypalfees']) * 0.4;
+		$data['paypalfees'] = round(($num['valueUsersPaypal'] + $num['valueCreditsPaypal']) - ($y-$z),2);
+		$data['partnerfees'] = round(($data['valueusers'] + $data['valuecredits'] - $data['stripefees'] - $data['paypalfees']) * 0.6,2);
+		$data['total'] = round(($data['valueusers'] + $data['valuecredits'] - $data['stripefees'] - $data['paypalfees']) * 0.4,2);
 
 		return $data;
 
@@ -104,17 +104,35 @@ class Iptvcontrol extends MY_Controller {
   	}
   	public function addcredits()
   	{
-  		$data['ans']=1;
   		$appname=$this->input->post('appname');
   		$credits=$this->input->post('credits');
   		$value=$this->input->post('value');
-  		//$this->output->set_content_type('application/json')->set_output(json_encode(array('success' => 1, 'data' => $data)));
   		$this->load->model('stats');
   		$num=$this->stats->addcredits($appname,$credits,$value);
   		if($num==1)
-  		  	$this->output->set_content_type('application/json')->set_output(json_encode(array('success' => 1)));
+  		   	$this->output->set_content_type('application/json')->set_output(json_encode(array('success' => 1)));
   	 	else
-  		   	$this->output->set_content_type('application/json')->set_output(json_encode(array('success' => 0)));
+  	    	$this->output->set_content_type('application/json')->set_output(json_encode(array('success' => 0)));
   	}
+
+  	public function populatedatamanual() {
+		if (!in_array($this->input->post('type'), $this->populatevalues)) {
+        	$this->output->set_content_type('application/json')->set_output(json_encode(array('success' => 0, 'error' => 'Wrong input')));			
+		}
+		else if ($this->input->post('type') != 'all' && $this->input->post('type') != 'current' && $this->input->post('type') != 'last' && $this->input->post('type') > date('m')) {
+        	$this->output->set_content_type('application/json')->set_output(json_encode(array('success' => 0, 'error' => 'Wrong input')));
+		}
+		else {
+			$this->load->model('stats');
+			$data = $this->stats->numCreditsmanual($this->input->post('type'));
+        	$this->output->set_content_type('application/json')->set_output(json_encode(array('success' => 1, 'data' => $data)));
+
+		}
+
+  	}
+  	public function iptvaccess()
+  	{
+  		$this->load->view('iptvaccess2');
+  	} 
 
 }
