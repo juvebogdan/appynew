@@ -61,6 +61,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <a href="<?php echo base_url(); ?>appy/ban">Ban &amp; Allow User</a><br />
       <a href="<?php echo base_url(); ?>appy/stats">App Stats</a><br />
       <a href="<?php echo base_url(); ?>appy/iptvaccess">IPTV Access</a><br />
+      <?php if ($_SESSION['username']=='FissNew') : ?>
+          <a href="<?php echo base_url(); ?>appy/iptvaccessnew">IPTV Access New</a><br />
+      <?php endif; ?>      
       <a href="<?php echo base_url(); ?>appy/vpn">VPN</a></p>
     <p><strong>Update<br />
       </strong><a href="<?php echo base_url(); ?>appy/appupdate">App Update</a></p>

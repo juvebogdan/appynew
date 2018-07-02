@@ -539,6 +539,11 @@ class Appy extends MY_Controller {
 			$this->load->view('iptvaccess');
 		}		
 	}
+	public function iptvaccessnew() {
+		if ($this->username != 'guest') {
+			$this->load->view('iptvaccess2');
+		}		
+	}
 
 	public function appupdate() {
 		if ($this->username != 'guest') {
@@ -1639,9 +1644,10 @@ class Appy extends MY_Controller {
 	}
 
 	public function grantiptv() {
-		$this->form_validation->set_rules('number','User','required|trim|mandatory|numeric');
 		$this->form_validation->set_rules('username','Username','required|trim|mandatory');
 		$this->form_validation->set_rules('password','Password','required|trim|mandatory');
+		$this->form_validation->set_rules('number','User','required|trim|mandatory|numeric');
+		$this->form_validation->set_rules('useremail','E-mail','required|trim|mandatory');
 		$this->form_validation->set_rules('accessduration','Access Ends','required|trim|mandatory|alpha_dash_space|max_length[20]');
 		if($this->form_validation->run()==FALSE){
 			exit(validation_errors());
@@ -1649,8 +1655,9 @@ class Appy extends MY_Controller {
 		else {
 			$this->load->model('devices');
 			for ($i=0; $i < $this->input->post('number'); $i++) {
-				$this->devices->grantiptv($this->input->post('user'. $i),$this->input->post('username'),$this->input->post('password'),$this->input->post('accessduration'));
+				$this->devices->grantiptv($this->input->post('user'. $i),$this->input->post('username'),$this->input->post('password'),$this->input->post('accessduration'));	
 			}
+
 			$appname = $_SESSION['appname'];
 			$clientaddress = $_SESSION['email'];
 			$expirydate = $this->input->post('accessduration');
@@ -1659,6 +1666,68 @@ class Appy extends MY_Controller {
 				$this->sendAccessEmail($dataforuser, $clientaddress, $expirydate, $appname);
 			}			
 			exit('Success');				
+		}
+	}
+
+	public function grantiptvnew() {
+		// $this->form_validation->set_rules('username','Username','required|trim|mandatory');
+		// $this->form_validation->set_rules('password','Password','required|trim|mandatory');
+		//$this->form_validation->set_rules('number','User','required|trim|mandatory|numeric');
+		$this->form_validation->set_rules('useremail','E-mail','required|trim|mandatory');
+		$this->form_validation->set_rules('accessduration','Access Ends','required|trim|mandatory|alpha_dash_space|max_length[20]');
+		if($this->form_validation->run()==FALSE){
+			exit(validation_errors());
+		}
+		else {
+			//exit($this->input->post('useremail'));
+			//$emails=array();
+			//Provjera da li se nalazi vrijednost duration-a kako treba
+			$values=['week','month1','month3','month6','month12'];
+			if(!in_array($this->input->post('accessduration'),$values))
+			{
+				exit('REQUEST CAN NOT BE EXECUTED');
+			}
+			$this->load->model('devices');
+			// for ($i=0; $i < $this->input->post('number'); $i++) {
+			// 	$this->devices->grantiptv($this->input->post('user'. $i),$this->input->post('username'),$this->input->post('password'),$this->input->post('accessduration'));	
+			// }
+			//dobijanje podataka o useru na osnovu email adrese ili ip adrese
+			$em=$this->devices->getemail($this->input->post('useremail'));
+			//ukoliko ima usera za taj tip,klijenta,email i tip manual poziva se api koji dalje zavrsava sve i salje mail.
+			if($em['num']>0)
+			{
+				$username = 'appy';
+                $password = 'fisstops';
+			    $curl_handle = curl_init();
+			    curl_setopt($curl_handle, CURLOPT_URL, 'http://appy.zone/rest/MainAPI/');
+			    curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+			    curl_setopt($curl_handle, CURLOPT_POST, 1);
+			    $data = array(
+			    	'type'	=>	$this->input->post('accessduration'),
+			    	'client' => $_SESSION['username'],
+			    	'email' => $em['email'],
+			    	'paytype' => 'manual'
+			    );
+			    curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $data); 
+			    curl_setopt($curl_handle, CURLOPT_USERPWD, $username . ':' . $password); 
+			    $buffer = curl_exec($curl_handle);
+			    curl_close($curl_handle);
+			    $result = json_decode($buffer);	
+			    exit($result->message);
+			}
+			else
+			{
+				exit('USER NOT FOUND');
+			}
+
+			// $appname = $_SESSION['appname'];
+			// $clientaddress = $_SESSION['email'];
+			// $expirydate = $this->input->post('accessduration');
+			// $dataforuser = $this->devices->getuserdata($this->input->post('user0'))['Email'];
+			// if (isset($dataforuser) && $dataforuser != '') {
+			// 	$this->sendAccessEmail($dataforuser, $clientaddress, $expirydate, $appname);
+			// }			
+			// exit('Success');				
 		}		
 	}
 

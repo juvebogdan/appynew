@@ -11,10 +11,12 @@
 
   <!-- InstanceBeginEditable name="EditingPane" -->
   <div class="editingwindow">
-    <p align="center"><span class="price">IPTV Access</span><br />
-    <span class="tiny">Activate user device for IPTV access</span></p>
+    <p align="center"><span class="price">IPTV Manual Access</span><br />
+    <span class="tiny">Manually activate or extend a users device(s) for IPTV access</span></p>
     <p align="center">User Email or IP address: 
       <input type="text" name="textfield" id="user" />
+    </p>
+    <p align="center">
       <input type="button" name="button" id="search" value="Find User" />
     </p>
     <p align="center">Enter the username and password from the IPTV panel</p>
@@ -24,13 +26,27 @@
     <p align="center">Password: 
       <input type="text" name="textfield3" id="password" />
     </p>
+<!--     <p align="center">Access duration: 
+        <select name="select2" id="accessend">
+        <option selected="selected">Select</option>
+        <option value='week'>Weekender</option>
+        <option value='month1'>1 Month</option>
+        <option value='month3'>3 Months</option>
+        <option value='month6'>6 Months</option>
+        <option value='month12'>12 Months</option>
+      </select>
+    </p> -->
     <p align="center">Access Ends: 
         <input class='sdt' name='accessends' id='accessend' type='text'>
       <br />
-    <span class="tiny">Make sure you set this correctly. Incorrect settings could terminate access earlier that paid for.</span></p>    
+    <span class="tiny">Make sure you set this correctly. Incorrect settings could terminate access earlier that paid for.</span></p> 
     <p align="center">
       <input type="button" name="button2" id="submit" value="Submit" />
     </p>
+<!--     <p align="center"><span class="tiny"><strong>On Submit</strong><br />
+      Your IPTV credit account will be debited<br />
+      User will be emailed to notify their access<br />
+    In app IPTV access will be instant</span></p> -->
   </div>
   <!-- InstanceEndEditable --></div>
 <div class="footer">
@@ -127,6 +143,7 @@ window.onclick = function(event) {
 $('#submit').on('click',function() {
   var formData = new FormData();
   formData.append('number',$( "#number" ).val());
+  formData.append('useremail',$( "#user" ).val());
   for (var i=0; i<$('#number').val(); i++) {
     if ($("#user" + i).is(':checked')) {
       formData.append('user' + i,$("#user" + i).val());

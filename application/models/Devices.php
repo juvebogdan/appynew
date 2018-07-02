@@ -187,6 +187,19 @@ class Devices extends MY_Model {
       $this->vpndb->where('username',$username);
       $query = $this->vpndb->get($this->vpnusers);
       return $query->result_array();    
-  }  
+  } 
+
+  public function getemail($emailorip) 
+  {
+      $this->db->where("Email='$emailorip' or IPAddress='$emailorip'",NULL,FALSE);
+      $query=$this->db->get($this->table);
+      $data['num']=$query->num_rows();
+      if($data['num']!=0)
+      {
+        $pom=$query->result_array();
+        $data['email']=$pom[0]['Email'];
+      }
+      return $data;      
+  }
 
 }
