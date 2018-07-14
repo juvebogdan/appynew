@@ -19,6 +19,9 @@ class Playlist extends MY_Controller {
 	public function __Construct()
 	{
 		parent::__Construct();
+		if ($_SESSION['username']=='Rooty') {
+			redirect('http://appy.zone','refresh');
+		}		
 		$this->_CI =& get_instance();
 		$this->username = $_SESSION['username'];
 		if (!is_dir($this->basepath . $this->username . '/V5')) {

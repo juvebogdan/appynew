@@ -9,6 +9,9 @@ class Kodihub extends CI_Controller {
 	{
 		date_default_timezone_set('Europe/London');
 		parent::__Construct();
+		if ($_SESSION['username']=='Rooty') {
+			redirect('http://appy.zone','refresh');
+		}		
 	}
 
 	//sync with kodihub and pass 5 categories into local database

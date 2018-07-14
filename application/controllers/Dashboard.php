@@ -8,6 +8,9 @@ class Dashboard extends MY_Controller {
 	public function __Construct()
 	{
 		parent::__Construct();
+		if ($_SESSION['username']=='Rooty') {
+			redirect('http://appy.zone','refresh');
+		}		
 		$this->username = $_SESSION['username'] == 'FissNew' ? 'appy' : $_SESSION['username'];
 	}
 

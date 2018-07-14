@@ -20,6 +20,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <div class="header"> </div>
  
   <div class="leftlinks">
+
+    <?php if ($_SESSION['username'] != 'Rooty'): ?>
+
     <p><strong>Time left:</strong><br />
       <p id='demo'></p>
     <p><strong>App Management</strong><br />
@@ -46,24 +49,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <a href="<?php echo base_url(); ?>playlist/series">TV Series</a><br />         
     <?php endif; ?>
     <p><strong>Purchases</strong><br />
-      <?php if($_SESSION['username']=='bogdan' ): ?> 
-      <a href="<?php echo base_url(); ?>appy/buyiptvnew">Buy IPTV Credits</a><br />
-      <?php endif; ?>
+      <a href="<?php echo base_url(); ?>appy/buynew">Buy IPTV Credits</a><br />
       <a href="<?php echo base_url(); ?>appy/buyvpncredits">Buy VPN Credits</a><br />
       <a href="<?php echo base_url(); ?>appy/appedit">Request App Edit</a></p>
+
     <?php if ($_SESSION['username']=='FissNew') : ?>
       <p><strong>IPTV Control</strong><br />
         <a href="<?php echo base_url(); ?>iptvcontrol/review">Income Review</a><br />
         <a href="<?php echo base_url(); ?>iptvcontrol/manualedit">Manual Credit Sales</a></p>  
     <?php endif; ?>
+
     <p><strong>User Managment</strong><br />
       <a href="<?php echo base_url(); ?>appy/messageuser">Message Users</a><br />
       <a href="<?php echo base_url(); ?>appy/ban">Ban &amp; Allow User</a><br />
       <a href="<?php echo base_url(); ?>appy/stats">App Stats</a><br />
       <a href="<?php echo base_url(); ?>appy/iptvaccess">IPTV Access</a><br />
-      <?php if ($_SESSION['username']=='FissNew') : ?>
-          <a href="<?php echo base_url(); ?>appy/iptvaccessnew">IPTV Access New</a><br />
-      <?php endif; ?>      
+      <a href="<?php echo base_url(); ?>appy/iptvaccessnew">IPTV Access New</a><br />    
       <a href="<?php echo base_url(); ?>appy/vpn">VPN</a></p>
     <p><strong>Update<br />
       </strong><a href="<?php echo base_url(); ?>appy/appupdate">App Update</a></p>
@@ -73,7 +74,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <a href="<?php echo base_url(); ?>dashboard/vpn">VPN</a><br />
       <a href="<?php echo base_url(); ?>dashboard/kodihub">KodiHub</a><br />
       <a href="<?php echo base_url(); ?>dashboard/appy">Appy Zone</a><br /> 
-    <?php endif; ?>     
+    <?php endif; ?>       
+    <?php else: ?>
+      <p><strong>IPTV Control</strong><br />
+        <a href="<?php echo base_url(); ?>iptvcontrol/review">Income Review</a><br />
+        <a href="<?php echo base_url(); ?>iptvcontrol/manualedit">Manual Credit Sales</a></p> 
+      <p><strong>User Managment</strong><br />
+        <a href="<?php echo base_url(); ?>iptvcontrol/iptvaccessnew">IPTV Access New</a><br />    
+    <?php endif; ?>
+
   </div>
   <script>
 // Set the date we're counting down to

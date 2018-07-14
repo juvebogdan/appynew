@@ -16,6 +16,9 @@ class Appy extends MY_Controller {
 	public function __Construct()
 	{
 		parent::__Construct();
+		if ($_SESSION['username']=='Rooty') {
+			redirect('http://appy.zone','refresh');
+		}		
 		$this->username = $_SESSION['username'] == 'FissNew' ? 'appy' : $_SESSION['username'];
 		$this->userkodiLocation = $this->basepath . $this->username . '/V5/kodi/builds.txt';
 		if ($this->username != 'appy') {
@@ -484,7 +487,7 @@ class Appy extends MY_Controller {
 		}
 	}
 
-	public function buyiptvnew() {
+	public function buynew() {
 		if ($this->username != 'guest') {
 			$this->load->model('appymodel');
 			$data['credits'] = $this->appymodel->get_iptvcredits($this->username);			

@@ -74,4 +74,5 @@ class Appymodel extends CI_Model {
       $query = $this->db->get($this->table);
       return $query->result_array()[0]['iptvcredits'];
     }
+
 }
