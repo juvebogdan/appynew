@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  
   <div class="leftlinks">
 
-    <?php if ($_SESSION['username'] != 'Rooty'): ?>
+    <?php if ($_SESSION['username'] != 'Rooty' && $_SESSION['type'] != 'zeroadmin'): ?>
 
     <p><strong>Time left:</strong><br />
       <p id='demo'></p>
@@ -75,12 +75,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <a href="<?php echo base_url(); ?>dashboard/kodihub">KodiHub</a><br />
       <a href="<?php echo base_url(); ?>dashboard/appy">Appy Zone</a><br /> 
     <?php endif; ?>       
-    <?php else: ?>
+    <?php elseif ($_SESSION['username'] == 'Rooty'): ?>
       <p><strong>IPTV Control</strong><br />
         <a href="<?php echo base_url(); ?>iptvcontrol/review">Income Review</a><br />
         <a href="<?php echo base_url(); ?>iptvcontrol/manualedit">Manual Credit Sales</a></p> 
       <p><strong>User Managment</strong><br />
-        <a href="<?php echo base_url(); ?>iptvcontrol/iptvaccessnew">IPTV Access New</a><br />    
+        <a href="<?php echo base_url(); ?>iptvcontrol/iptvaccessnew">IPTV Access New</a><br />  
+    <?php elseif ($_SESSION['type'] == 'zeroadmin'): ?>
+        <p id='demo'></p>
+        <p><strong>App Management</strong><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/menu">Menu Options</a><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/home">Home Screen</a><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/iptv">IPTV</a><br />
+        </p>
+        <p><strong>User Managment</strong><br />
+          <a href="<?php echo base_url(); ?>iptvcontrol/iptvaccessnew">IPTV Access Auto</a><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/messageuser">Message Users</a><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/ban">Ban &amp; Allow User</a><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/stats">App Stats</a><br />
+        <p><strong>Purchases<br />
+          </strong><a href="<?php echo base_url(); ?>zeroadmin/buynew">Buy IPTV Credits</a><strong><br />
+          </strong><a href="<?php echo base_url(); ?>zeroadmin/buyvpncredits">VPN Credits</a><strong><br />
+          </strong><a href="<?php echo base_url(); ?>zeroadmin/appedit">Request App Edit</a><br />
+        </p>
+        <p><strong>Update<br />
+          </strong><a href="<?php echo base_url(); ?>zeroadmin/appupdate">App Update</a>  
+        </p>          
     <?php endif; ?>
 
   </div>

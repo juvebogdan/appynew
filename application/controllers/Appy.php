@@ -3,15 +3,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Appy extends MY_Controller {
 
-	private $basepath = '/var/www/appy.zone/public_html/';
-	private $basepath2 = '/var/www/html/Edits/';
-	private $basepath3 = '/var/www/html/TempEdits/';
-	private $username;
-	private $masterkodiLocation = '/var/www/appy.zone/public_html/appy/V5/master/kodi/builds.txt';
-	private $masterappsLocation = '/var/www/appy.zone/public_html/appy/V5/master/apps/apps.txt';
-	private $userkodiLocation;
-	private $userappsLocation;
-	private $admin = 'appy';
+	protected $basepath = '/var/www/appy.zone/public_html/';
+	protected $basepath2 = '/var/www/html/Edits/';
+	protected $basepath3 = '/var/www/html/TempEdits/';
+	protected $username;
+	protected $masterkodiLocation = '/var/www/appy.zone/public_html/appy/V5/master/kodi/builds.txt';
+	protected $masterappsLocation = '/var/www/appy.zone/public_html/appy/V5/master/apps/apps.txt';
+	protected $userkodiLocation;
+	protected $userappsLocation;
+	protected $admin = 'appy';
 
 	public function __Construct()
 	{
@@ -34,7 +34,7 @@ class Appy extends MY_Controller {
 	}	
 
 	
-	private function formatImage($putanja,$width,$height,$type,$savepath)
+	protected function formatImage($putanja,$width,$height,$type,$savepath)
 	{
 		$params = array(
 				"putanja" => $putanja,
@@ -72,7 +72,12 @@ class Appy extends MY_Controller {
 			$data['actions'] = $this->emptyArray(4);
 		}
 		if ($this->username != 'guest') {
-			$this->load->view('mainmenu',$data);
+			if ($_SESSION['type']=='zeroadmin') {
+				$this->load->view('zeroadmin/mainmenu',$data);
+			}
+			else {
+				$this->load->view('mainmenu',$data);
+			}
 		} 						
 	}
 
@@ -133,7 +138,12 @@ class Appy extends MY_Controller {
 			$data['rows'] = 1;
 		}								
 		if ($this->username != 'guest') {
-			$this->load->view('home',$data);
+			if ($_SESSION['type']=='zeroadmin') {
+				$this->load->view('zeroadmin/home',$data);
+			}
+			else {
+				$this->load->view('home',$data);
+			}
 		}
 	}
 
@@ -193,7 +203,12 @@ class Appy extends MY_Controller {
 			$data['rows'] = 1;
 		}								
 		if ($this->username != 'guest') {
-			$this->load->view('iptv',$data);
+			if ($_SESSION['type']=='zeroadmin') {
+				$this->load->view('zeroadmin/iptv',$data);
+			}
+			else {
+				$this->load->view('iptv',$data);
+			}
 		}
 	}
 
@@ -515,7 +530,12 @@ class Appy extends MY_Controller {
 
 	public function messageuser() {	
 		if ($this->username != 'guest') {
-			$this->load->view('messageuser');
+			if ($_SESSION['type']=='zeroadmin') {
+				$this->load->view('zeroadmin/messageuser');
+			}
+			else {
+				$this->load->view('messageuser');
+			}
 		}		
 	}
 
@@ -621,7 +641,7 @@ class Appy extends MY_Controller {
 		
 	}
 
-	private function titles($num) {
+	protected function titles($num) {
 		$str = trim($this->input->post('title1')) . "\r\n";
 		for ($i=2;$i<=$num;$i++) {
 			$str .= trim($this->input->post('title' . $i)) . "\r\n";
@@ -629,7 +649,7 @@ class Appy extends MY_Controller {
 		return $str;
 	}
 
-	private function actions($num) {
+	protected function actions($num) {
 		$str = trim($this->input->post('action1')) . "\r\n";
 		for ($i=2;$i<=$num;$i++) {
 			$str .= trim($this->input->post('action' . $i)) . "\r\n";
@@ -2170,7 +2190,7 @@ class Appy extends MY_Controller {
 		}		
 	}
 
-	private function createFolder($type) {
+	protected function createFolder($type) {
 		if (!is_dir($this->basepath . $this->username . '/V5/' . $type)) {
 			mkdir($this->basepath . $this->username . '/V5/' . $type,0777,true);
 		}		

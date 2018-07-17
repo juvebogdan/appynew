@@ -355,7 +355,8 @@ class Imdbjob extends CI_Controller {
 				if (!(strtolower($matchesquotes[0][2][0]) == '"for adults"')) {
 
 					//search for 3x01 pattern
-					preg_match_all('/(\(\d+)x?(\d+)\)/', $movie, $matches, PREG_OFFSET_CAPTURE);
+					//mora x postojati
+					preg_match_all('/(\(\d+)x(\d+)\)/', $movie, $matches, PREG_OFFSET_CAPTURE);
 
 
 					if (isset($matches[0][0][0])) {
