@@ -15,7 +15,7 @@ class Imdb {
 		$apikey = $this->apikey;
 		$name = str_replace('&', '%26', $this->movie);
 
-		$url = str_replace(' ', '%20', "http://www.omdbapi.com/?t=$name&apikey=$apikey");
+		$url = str_replace(' ', '%20', "http://private.omdbapi.com/?t=$name&apikey=$apikey");
 		//$url = str_replace('&', '%26', "http://www.omdbapi.com/?t=$name&apikey=$apikey");
 
 		$curl = curl_init();
@@ -37,7 +37,7 @@ class Imdb {
 		$apikey = $this->apikey;
 		$name = str_replace('&', '%26', $this->movie);
 
-		$url = str_replace(' ', '%20', "http://www.omdbapi.com/?i=$name&apikey=$apikey");
+		$url = str_replace(' ', '%20', "http://private.omdbapi.com/?i=$name&apikey=$apikey");
 		//$url = str_replace('&', '%26', "http://www.omdbapi.com/?t=$name&apikey=$apikey");
 
 		$curl = curl_init();
