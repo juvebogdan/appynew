@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  
   <div class="leftlinks">
 
-    <?php if ($_SESSION['username'] != 'Rooty' && $_SESSION['type'] != 'zeroadmin'): ?>
+    <?php if ($_SESSION['username'] != 'Rooty' && $_SESSION['type'] != 'zeroadmin' && $_SESSION['type']!='customprovider' && $_SESSION['type']!='connection'): ?>
 
     <p><strong>Time left:</strong><br />
       <p id='demo'></p>
@@ -89,7 +89,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <a href="<?php echo base_url(); ?>zeroadmin/iptv">IPTV</a><br />
         </p>
         <p><strong>User Managment</strong><br />
-          <a href="<?php echo base_url(); ?>iptvcontrol/iptvaccessnew">IPTV Access Auto</a><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/iptvaccessnew">IPTV Access Auto</a><br />
           <a href="<?php echo base_url(); ?>zeroadmin/messageuser">Message Users</a><br />
           <a href="<?php echo base_url(); ?>zeroadmin/ban">Ban &amp; Allow User</a><br />
           <a href="<?php echo base_url(); ?>zeroadmin/stats">App Stats</a><br />
@@ -101,6 +101,59 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <p><strong>Update<br />
           </strong><a href="<?php echo base_url(); ?>zeroadmin/appupdate">App Update</a>  
         </p>          
+    <?php elseif ($_SESSION['type'] == 'customprovider'): ?>
+        <p id='demo'></p>
+        <p><strong>App Management</strong><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/menu">Menu Options</a><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/home">Home Screen</a><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/iptv">IPTV</a><br />
+        </p>
+        <p><strong>IPTV</strong><br />
+          <a href="<?php echo base_url(); ?>playlist/">Upload  Playlist data</a><br />
+          <a href="<?php echo base_url(); ?>playlist/movies">Movies</a><br />
+          <a href="<?php echo base_url(); ?>playlist/series">TV Series</a><br />
+          <a href="<?php echo base_url(); ?>playlist/ls247">24/7 Shows</a><br />
+          <a href="<?php echo base_url(); ?>playlist/sports">Sports</a> 
+        </p>
+        <p><strong>User Managment</strong><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/iptvaccessnew">IPTV Access Auto</a><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/messageuser">Message Users</a><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/ban">Ban &amp; Allow User</a><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/stats">App Stats</a><br />
+        </p>
+        <p><strong>Purchases<br />
+          </strong><a href="<?php echo base_url(); ?>zeroadmin/buyvpncredits">VPN Credits</a><strong><br />
+          </strong><a href="<?php echo base_url(); ?>zeroadmin/appedit">Request App Edit</a><br />
+        </p>
+        <p><strong>Update<br />
+          </strong><a href="<?php echo base_url(); ?>zeroadmin/appupdate">App Update</a>  
+        </p>
+    <?php elseif ($_SESSION['type'] == 'connection'): ?>
+        <p id='demo'></p>
+        <p><strong>App Management</strong><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/menu">Menu Options</a><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/home">Home Screen</a><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/iptv">IPTV</a><br />
+        </p>
+        <p><strong>IPTV</strong><br />
+          <a href="<?php echo base_url(); ?>playlist/">Upload  Playlist data</a><br />
+          <a href="<?php echo base_url(); ?>playlist/movies">Movies</a><br />
+          <a href="<?php echo base_url(); ?>playlist/series">TV Series</a><br />
+          <a href="<?php echo base_url(); ?>playlist/ls247">24/7 Shows</a><br />
+          <a href="<?php echo base_url(); ?>playlist/sports">Sports</a> 
+        </p>
+        <p><strong>User Managment</strong><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/messageuser">Message Users</a><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/ban">Ban &amp; Allow User</a><br />
+          <a href="<?php echo base_url(); ?>zeroadmin/stats">App Stats</a><br />
+        </p>
+        <p><strong>Purchases<br />
+          </strong><a href="<?php echo base_url(); ?>zeroadmin/buyvpncredits">VPN Credits</a><strong><br />
+          </strong><a href="<?php echo base_url(); ?>zeroadmin/appedit">Request App Edit</a><br />
+        </p>
+        <p><strong>Update<br />
+          </strong><a href="<?php echo base_url(); ?>zeroadmin/appupdate">App Update</a>  
+        </p>        
     <?php endif; ?>
 
   </div>

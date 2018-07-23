@@ -164,6 +164,10 @@ class Zeroadmin extends Appy {
 			}					
 					
 		}					
+	}	
+
+	public function iptvaccessnew() {
+		$this->load->view('zeroadmin/iptvaccess2');		
 	}				
 
 }	

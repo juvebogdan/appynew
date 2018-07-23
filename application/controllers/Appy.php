@@ -72,7 +72,7 @@ class Appy extends MY_Controller {
 			$data['actions'] = $this->emptyArray(4);
 		}
 		if ($this->username != 'guest') {
-			if ($_SESSION['type']=='zeroadmin') {
+			if ($_SESSION['type']=='zeroadmin' || $_SESSION['type']=='customprovider' || $_SESSION['type']=='connection') {
 				$this->load->view('zeroadmin/mainmenu',$data);
 			}
 			else {
@@ -138,7 +138,7 @@ class Appy extends MY_Controller {
 			$data['rows'] = 1;
 		}								
 		if ($this->username != 'guest') {
-			if ($_SESSION['type']=='zeroadmin') {
+			if ($_SESSION['type']=='zeroadmin' || $_SESSION['type']=='customprovider' || $_SESSION['type']=='connection') {
 				$this->load->view('zeroadmin/home',$data);
 			}
 			else {
@@ -203,7 +203,7 @@ class Appy extends MY_Controller {
 			$data['rows'] = 1;
 		}								
 		if ($this->username != 'guest') {
-			if ($_SESSION['type']=='zeroadmin') {
+			if ($_SESSION['type']=='zeroadmin' || $_SESSION['type']=='customprovider' || $_SESSION['type']=='connection') {
 				$this->load->view('zeroadmin/iptv',$data);
 			}
 			else {
@@ -530,7 +530,7 @@ class Appy extends MY_Controller {
 
 	public function messageuser() {	
 		if ($this->username != 'guest') {
-			if ($_SESSION['type']=='zeroadmin') {
+			if ($_SESSION['type']=='zeroadmin' || $_SESSION['type']=='customprovider' || $_SESSION['type']=='connection') {
 				$this->load->view('zeroadmin/messageuser');
 			}
 			else {
